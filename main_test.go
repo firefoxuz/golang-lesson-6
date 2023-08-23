@@ -13,7 +13,7 @@ func TestSum(t *testing.T) {
 
 	t.Run("test sub", func(t *testing.T) {
 		res := sum(1, 2)
-		assert.Equal(t, res, 1)
+		assert.Equal(t, res, 3)
 	})
 
 }
