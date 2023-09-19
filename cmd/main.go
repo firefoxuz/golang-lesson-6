@@ -39,9 +39,13 @@ func Server(handlers api.IApi) {
 	if err != nil {
 		log.Fatalln("cannot add user")
 	}
-	user, _ := handlers.GetUser(&models.GetUserRequest{
+	user, err := handlers.GetUser(&models.GetUserRequest{
 		UserId: 1,
 	})
+
+	if err != nil {
+		log.Fatalln("cannot get user")
+	}
 
 	fmt.Printf("%v", user)
 
@@ -71,6 +75,10 @@ func Server(handlers api.IApi) {
 		Name:     "Daler",
 		Surname:  "Sultonov",
 	})
+
+	if err != nil {
+		log.Fatalln("cannot add user")
+	}
 
 	_, err = handlers.AddUser(&models.AddUserRequest{
 		Login:    "manager_1",
