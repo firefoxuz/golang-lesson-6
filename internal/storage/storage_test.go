@@ -113,7 +113,7 @@ func TestDeleteUser(t *testing.T) {
 	assert.NoError(t, err, "storage should not return an error in this case")
 	assert.Equal(t, 1, userId)
 
-	storage.DeleteUser(userId)
+	err = storage.DeleteUser(userId)
 	assert.NoError(t, err, "storage should not return an error in this case")
 
 	_, err = storage.GetUser(userId)
