@@ -6,6 +6,7 @@ import (
 	"golang-api/internal/models"
 	"golang-api/internal/service"
 	"golang-api/internal/storage"
+	"log"
 )
 
 func main() {
@@ -17,26 +18,34 @@ func main() {
 }
 
 func Server(handlers api.IApi) {
-	handlers.AddUser(&models.AddUserRequest{
+	_, err := handlers.AddUser(&models.AddUserRequest{
 		Login:    "manager_1",
 		Password: "123456",
 		Name:     "Daler",
 		Surname:  "Sultonov",
 	})
 
-	handlers.AddUser(&models.AddUserRequest{
+	if err != nil {
+		log.Fatalln("cannot add user")
+	}
+
+	_, err = handlers.AddUser(&models.AddUserRequest{
 		Login:    "manager_2",
 		Password: "123456",
 		Name:     "Daler",
 		Surname:  "Sultonov",
 	})
 
+	if err != nil {
+		log.Fatalln("cannot add user")
+	}
 	user, _ := handlers.GetUser(&models.GetUserRequest{
-		1,
+		UserId: 1,
 	})
+
 	fmt.Printf("%v", user)
 
-	handlers.UpdateUser(&models.UpdateUserRequest{
+	err = handlers.UpdateUser(&models.UpdateUserRequest{
 		Id:       int(user.Id),
 		Login:    "updated_manager",
 		Password: "12345678",
@@ -44,30 +53,46 @@ func Server(handlers api.IApi) {
 		Surname:  "Sultonov_",
 	})
 
-	handlers.DeleteUser(&models.DeleteUserRequest{
+	if err != nil {
+		log.Fatalln("cannot update user")
+	}
+
+	err = handlers.DeleteUser(&models.DeleteUserRequest{
 		Id: 1,
 	})
 
-	handlers.AddUser(&models.AddUserRequest{
+	if err != nil {
+		log.Fatalln("cannot delete user")
+	}
+
+	_, err = handlers.AddUser(&models.AddUserRequest{
 		Login:    "manager_1",
 		Password: "123456",
 		Name:     "Daler",
 		Surname:  "Sultonov",
 	})
 
-	handlers.AddUser(&models.AddUserRequest{
+	_, err = handlers.AddUser(&models.AddUserRequest{
 		Login:    "manager_1",
 		Password: "123456",
 		Name:     "Daler",
 		Surname:  "Sultonov",
 	})
 
-	handlers.AddUser(&models.AddUserRequest{
+	if err != nil {
+		log.Fatalln("cannot add user")
+	}
+
+	_, err = handlers.AddUser(&models.AddUserRequest{
 		Login:    "manager_1",
 		Password: "123456",
 		Name:     "Daler",
 		Surname:  "Sultonov",
 	})
+
+	if err != nil {
+		log.Fatalln("cannot add user")
+	}
 
 	users := handlers.GetUsers(&models.GetUsersRequest{})
 	fmt.Printf("%v", users)
